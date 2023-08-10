@@ -1,8 +1,8 @@
 # mada_game_1
 First Game Design from Madalena
 
-##Dependencies
+## Dependencies
 pip instal raylib
 
-##Run
+## Run
 python3 main.py
