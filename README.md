@@ -2,7 +2,7 @@
 First Game Design from Madalena
 
 ## Dependencies
-pip instal raylib
+pip install raylib
 
 ## Run
 python3 main.py
