@@ -1,28 +1,37 @@
 # levels
 import pyray as r
 import globalvars as g
+import ring
+import enemy
 
 levels = [
     {
         "Title": "Nivel 1",
         "bg": "assets/bg.png",
         "rings": [
-            (10, 500), (10, 600), (10, 700), (10, 800), (10, 900),
-            (10, 1000), (110, 1000), (210, 1000), (310, 1000), (310, 1100),
-            (310, 1200), (310, 1300), (210, 1300), (110, 1300), (10, 1300),
-            (10, 1400), (10, 1500), (10, 1600), (110, 1600), (210, 1600),
-            (310, 1600), (310, 1700), (310, 1800), (210, 1900), (110, 2000),
-            (110, 2100), (210, 2200), (310, 2300), (210, 2400), (110, 2500),
-            (110, 2600), (110, 2700), (110, 2800), (210, 2900), (310, 2800),
-            (210, 3000), (210, 3100), (210, 3200), (210, 3300), (210, 3400)
+            (10, 700), (10, 800), (10, 900), (10, 1000), (10, 1100),
+            (10, 1200), (110, 1200), (210, 1200), (310, 1200), (310, 1300),
+            (310, 1400), (310, 1500), (210, 1500), (110, 1500), (10, 1500),
+            (10, 1600), (10, 1700), (10, 1800), (110, 1800), (210, 1800),
+            (310, 1800), (310, 1900), (310, 2000), (210, 2100), (110, 2200),
+            (110, 2300), (210, 2400), (310, 2500), (210, 2600), (110, 2700),
+            (110, 2800), (110, 2900), (110, 3000), (210, 3100), (310, 3000),
+            (210, 3200), (210, 3300), (210, 3400), (210, 3500), (210, 3600)
         ],
+        "enemies": [
+            [
+                (100, 700), (20, 1300)
+            ], 
+            [
+                (20, 1900), (30, 2400)
+            ]
+        ]
     }
 ]
 background = None
 x = 0
 y = 0
 scale = 3.0
-ring = None
 level = None
 
 
@@ -35,7 +44,9 @@ def init(_level=1):
 
     level = _level - 1
     background = r.load_texture(levels[level]["bg"])
-    ring = r.load_texture("assets/ring.png")
+    ring.init()
+    enemy.init()
+
     x = 0
     y = (background.height * scale - g.SCREEN_HEIGHT) * -1
 
@@ -48,23 +59,31 @@ def update(brid_pos, bird_size):
         pos = levels[level]["rings"][i]
         if pos[0] >= 0:
             r.draw_texture_ex(
-                ring, (x + pos[0], y + pos[1]), 0.0, scale, r.WHITE
+                ring.get_frame_image(i),
+                (x + pos[0], y + pos[1]), 0.0, scale, r.WHITE
             )
 
-        # aqui vai o sistema da colisão
-        # para não ter que voltar a iterar o aneis de novo
-        if (
-            brid_pos[0] + bird_size[0] > (x + pos[0]) and
-            brid_pos[0] < (x + pos[0] + (20 * scale)) and
-            brid_pos[1] + bird_size[1] > (y + pos[1]) and
-            brid_pos[1] < (y + pos[1] + (20 * scale))
-           ):
-            levels[level]["rings"][i] = (-1, 0)
-            points += 50
+            # aqui vai o sistema da colisão
+            # para não ter que voltar a iterar o aneis de novo
+            if (
+                brid_pos[0] + bird_size[0] > (x + pos[0]) and
+                brid_pos[0] < (x + pos[0] + (20 * scale)) and
+                brid_pos[1] + bird_size[1] > (y + pos[1]) and
+                brid_pos[1] < (y + pos[1] + (20 * scale))
+               ):
+                levels[level]["rings"][i] = (-1, 0)
+                ring.play_sound()
+                points += 50
+
+    ring.tick()
+
+    enemy.update(enemy.BOLAFEIA, levels[level]["enemies"][0], (x, y))
+    enemy.update(enemy.SIMPATICO, levels[level]["enemies"][1], (x, y))
 
     return points
 
 
 def end():
-    r.unload_texture(ring)
+    ring.end()
+    enemy.end()
     r.unload_texture(background)

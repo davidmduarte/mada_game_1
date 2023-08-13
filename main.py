@@ -8,6 +8,7 @@ import game
 status = 0
 
 r.init_window(g.SCREEN_WIDTH, g.SCREEN_HEIGHT, "Madalena Jogo 1")
+r.init_audio_device()
 r.set_target_fps(120)
 fnt = r.load_font("assets/novem.ttf")
 
@@ -36,4 +37,5 @@ while not r.window_should_close():
     r.end_drawing()
 
 r.unload_font(fnt)
+r.close_audio_device()
 r.close_window()

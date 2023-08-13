@@ -1,5 +1,6 @@
 # passarolho
 import pyray as r
+import globalvars as g
 
 initialized = False
 images = [None, None, None]
@@ -29,7 +30,6 @@ def init(_x=0, _y=0):
     x = _x
     y = _y
     initialized = True
-    print(initialized)
 
 
 def setAnimation(flag=True):
@@ -65,6 +65,11 @@ def update():
 
         mov *= fric
         x += mov
+
+        if x < -20:
+            x = -20
+        elif x + 100 > g.SCREEN_WIDTH:
+            x = g.SCREEN_WIDTH - 100
 
         cntFrames += 1
 

@@ -88,5 +88,8 @@ def end():
     global initialized
 
     bird.end()
+    levels.end()
+
+    initialized = False
 
     return 0
