@@ -1,6 +1,7 @@
 # levels
 import pyray as r
 import globalvars as g
+import background
 import ring
 import enemy
 
@@ -19,16 +20,11 @@ levels = [
             (210, 3200), (210, 3300), (210, 3400), (210, 3500), (210, 3600)
         ],
         "enemies": [
-            [
-                (100, 700), (20, 1300)
-            ], 
-            [
-                (20, 1900), (30, 2400)
-            ]
+            [(100, 700), (20, 1300)],
+            [(20, 1900), (30, 2400)]
         ]
     }
 ]
-background = None
 x = 0
 y = 0
 scale = 3.0
@@ -36,24 +32,23 @@ level = None
 
 
 def init(_level=1):
-    global background
     global ring
     global level
     global x
     global y
 
     level = _level - 1
-    background = r.load_texture(levels[level]["bg"])
+    background.init(levels[level]["bg"])
     ring.init()
     enemy.init()
 
     x = 0
-    y = (background.height * scale - g.SCREEN_HEIGHT) * -1
+    y = (background.height * scale - g.SCREEN_HEIGHT) * -1.0
 
 
 def update(brid_pos, bird_size):
     points = 0
-    r.draw_texture_ex(background, (0, y), 0.0, scale, r.WHITE)
+    background.update(y)
 
     for i in range(len(levels[level]["rings"])):
         pos = levels[level]["rings"][i]
