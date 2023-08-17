@@ -20,8 +20,8 @@ levels = [
             (210, 3200), (210, 3300), (210, 3400), (210, 3500), (210, 3600)
         ],
         "enemies": [
-            [(100, 700), (20, 1300)],
-            [(20, 1900), (30, 2400)]
+            [(150, 700), (150, 1300)],
+            [(30, 1900), (30, 2400)]
         ]
     }
 ]
@@ -46,7 +46,7 @@ def init(_level=1):
     y = (background.height * scale - g.SCREEN_HEIGHT) * -1.0
 
 
-def update(brid_pos, bird_size):
+def update(bird_pos, bird_size):
     points = 0
     background.update(y)
 
@@ -61,10 +61,10 @@ def update(brid_pos, bird_size):
             # aqui vai o sistema da colisão
             # para não ter que voltar a iterar o aneis de novo
             if (
-                brid_pos[0] + bird_size[0] > (x + pos[0]) and
-                brid_pos[0] < (x + pos[0] + (20 * scale)) and
-                brid_pos[1] + bird_size[1] > (y + pos[1]) and
-                brid_pos[1] < (y + pos[1] + (20 * scale))
+                bird_pos[0] + bird_size[0] > (x + pos[0]) and
+                bird_pos[0] < (x + pos[0] + (20 * scale)) and
+                bird_pos[1] + bird_size[1] > (y + pos[1]) and
+                bird_pos[1] < (y + pos[1] + (20 * scale))
                ):
                 levels[level]["rings"][i] = (-1, 0)
                 ring.play_sound()
@@ -72,10 +72,16 @@ def update(brid_pos, bird_size):
 
     ring.tick()
 
-    enemy.update(enemy.BOLAFEIA, levels[level]["enemies"][0], (x, y))
-    enemy.update(enemy.SIMPATICO, levels[level]["enemies"][1], (x, y))
+    bird_collision_0 = enemy.update(
+        enemy.BOLAFEIA, levels[level]["enemies"][0],
+        (x, y), bird_pos, bird_size
+    )
+    bird_collision_1 = enemy.update(
+        enemy.SIMPATICO, levels[level]["enemies"][1],
+        (x, y), bird_pos, bird_size
+    )
 
-    return points
+    return points, bird_collision_0 or bird_collision_1 
 
 
 def end():

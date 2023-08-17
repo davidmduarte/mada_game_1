@@ -1,4 +1,7 @@
 # menu
+# falta um titulo giro
+# falta um backgroud giro
+# falta uma font que suporte utf8 gira e monospace
 import pyray as r
 import bird
 
@@ -55,4 +58,3 @@ def update(fnt):
         r.draw_text_ex(fnt, "Sair", (64, 229), 20, 0, r.GREEN)
 
     return 0
-

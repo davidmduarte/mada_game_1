@@ -1,4 +1,7 @@
 # game
+# falta o "GAME OVER"
+# falta o reiniciar o jogo
+# falta sair do jogo e voltar para no menu inicial
 import pyray as r
 import levels
 import bird
@@ -36,11 +39,17 @@ def update(fnt):
 
     r.clear_background(r.RED)
 
-    points += levels.update((bird.x, bird.y), (120, 120))
+    pnts, dead_bird = levels.update((bird.x, bird.y), (120, 120))
+    points += pnts
+    if dead_bird:
+        bird.die()
+        status = 3
+
     bird.update()
 
     r.draw_text_ex(fnt, "SCORE: " + str(points), (5, 5), 25, 0, r.RED)
 
+    # Á espera de uma tecvla para iniciar o jogo
     if status == 0:
         if r.is_key_pressed(r.KEY_ENTER):
             bird.setAnimation(True)
@@ -50,7 +59,7 @@ def update(fnt):
             fnt, "Tecla Enter para comecar",
             (65, 300), 20, 0, r.BLUE
         )
-
+    # Jogo a decorrer
     elif status == 1:
         if r.is_key_pressed(r.KEY_P):
             bird.setAnimation(False)
@@ -66,6 +75,8 @@ def update(fnt):
 
         levels.y += 1
 
+    # Jogo em pausa
+    # calculo que este estado ainda tenha muitos bugs
     elif status == 2:
         if r.is_key_pressed(r.KEY_P):
             bird.setAnimation(True)
@@ -75,11 +86,12 @@ def update(fnt):
             fnt, "Tecla P para continuar",
             (50, 300), 25, 0, r.WHITE
         )
+    # O Jogo acabou
     elif status == 3:
         if r.is_key_pressed(r.KEY_ENTER):
             return end()
 
-        r.draw_text_ex(fnt, "Fim do Jogo", (50, 300), 25, 0, r.WHITE)
+        r.draw_text_ex(fnt, "Fim do Jogo", (60, 300), 40, 0, r.WHITE)
 
     return 1
 

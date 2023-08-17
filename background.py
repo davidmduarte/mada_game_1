@@ -4,7 +4,7 @@ import globalvars as g
 
 images = [None, None, None, None]
 height = 0
-y_factor = [0.4, 0.6, 0.8, 1.0]
+y_factor = [1.0, 0.6, 0.8, 1.0]
 stoped = False
 
 
@@ -13,7 +13,6 @@ def init(path):
     global y_factor
     global height
 
-    #y_factor[0] = y_factor[1] = y_factor[2] = y_factor[3] = r.load_texture(path)
     for i in range(4):
         images[i] = r.load_texture("assets/bg" + str(i) + ".png")
     height = images[0].height
