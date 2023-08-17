@@ -73,6 +73,15 @@ def update(fnt):
         elif r.is_key_up(r.KEY_LEFT):
             bird.left = False
 
+        if r.is_key_down(r.KEY_DOWN):
+            bird.down = True
+        elif r.is_key_up(r.KEY_DOWN):
+            bird.down = False
+        if r.is_key_down(r.KEY_UP):
+            bird.up = True
+        elif r.is_key_up(r.KEY_UP):
+            bird.up = False
+
         levels.y += 1
 
     # Jogo em pausa

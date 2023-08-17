@@ -11,10 +11,13 @@ stoped = True
 x = 0.0
 y = 0.0
 mov = 0.0
+mov_y = 0.0
 acc = 0.0
 fric = 0.96
 left = False
 right = False
+up = False
+down = False
 dead = False
 sound = None
 
@@ -72,7 +75,9 @@ def update():
     global acc
     global fric
     global mov
+    global mov_y
     global x
+    global y
 
     if not initialized:
         return
@@ -94,14 +99,25 @@ def update():
             mov -= 0.1
         if right:
             mov += 0.1
+        if up:
+            mov_y -= 0.1
+        if down:
+            mov_y += 0.1
 
         mov *= fric
+        mov_y *= fric
         x += mov
+        y += mov_y
 
         if x < -20:
             x = -20
         elif x + 100 > g.SCREEN_WIDTH:
             x = g.SCREEN_WIDTH - 100
+
+        if y < 30:
+            y = 30
+        elif y + 100 > g.SCREEN_HEIGHT:
+            y = g.SCREEN_HEIGHT - 100
 
         cntFrames += 1
 

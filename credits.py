@@ -16,6 +16,7 @@ linhas = [
     " versao para o PC."
 ]
 poss = [None for i in range(6)]
+bg = None
 
 
 def init():
@@ -24,6 +25,7 @@ def init():
     global delay
     global poss
     global bird
+    global bg
 
     initialized = True
     status = 0
@@ -38,7 +40,9 @@ def init():
         [{"x": 180, "y": 700} for i in range(len(linhas[5]))]
     ]
 
-    bird.init(130, 350)
+    bg = r.load_texture("assets/credits_bg.png")
+
+    bird.init(130, 400)
     bird.setFrame(0)
     bird.setAnimation(True)
 
@@ -61,7 +65,7 @@ def update(fnt):
             return 0
 
     # Render
-    r.clear_background(r.GRAY)
+    r.draw_texture_ex(bg, (0, 0), 0.0, 3, r.WHITE)
 
     r.draw_text_ex(fnt, "Creditos", (135, 50), 30, 0, r.DARKGRAY)
     r.draw_text_ex(fnt, "Creditos", (133, 48), 30, 0, r.RED)
