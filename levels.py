@@ -4,12 +4,20 @@ import globalvars as g
 import background
 import ring
 import enemy
+import utils as u
 
 levels = []
 x = 0
 y = 0
 scale = 3.0
 level = None
+# plus_points serve para guardar a info para fazer a animaçao dos pontos ganhos
+# só suporta 3 animacões em simultanea
+# idx 0 - alpha
+# idx 1 - size
+# idx 2 - x
+# idx 3 - y
+plus_points = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 
 def init(_level=1):
@@ -48,7 +56,7 @@ def init(_level=1):
     y = (background.height * scale - g.SCREEN_HEIGHT) * -1.0
 
 
-def update(bird_pos, bird_size):
+def update(bird_pos, bird_size, fnt):
     points = 0
     background.update(y)
 
@@ -71,6 +79,23 @@ def update(bird_pos, bird_size):
                 levels[level]["rings"][i] = (-1, 0)
                 ring.play_sound()
                 points += 50
+                for j in range(3):
+                    if plus_points[j][0] <= 0:
+                        plus_points[j][0] = 1
+                        plus_points[j][1] = 15
+                        plus_points[j][2] = x + pos[0] + 30
+                        plus_points[j][3] = y + pos[1] + 30
+                        break
+
+    for j in range(3):
+        if plus_points[j][0] > 0:
+            plus_points[j][0] -= 0.01
+            plus_points[j][1] += 0.3
+            plus_points[j][3] -= 0.3
+            u.draw_text_fade_fx(
+                fnt, "+50", (plus_points[j][2], plus_points[j][3]),
+                plus_points[j][1], plus_points[j][0], r.RED
+            )
 
     ring.tick()
 
@@ -83,7 +108,7 @@ def update(bird_pos, bird_size):
         (x, y), bird_pos, bird_size
     )
 
-    return points, bird_collision_0 or bird_collision_1 
+    return points, bird_collision_0 or bird_collision_1
 
 
 def end():

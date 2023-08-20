@@ -38,7 +38,7 @@ def update(fnt):
 
     r.clear_background(r.RED)
 
-    pnts, dead_bird = levels.update((bird.x, bird.y), (120, 120))
+    pnts, dead_bird = levels.update((bird.x, bird.y), (120, 120), fnt)
     points += pnts
     if dead_bird:
         bird.die()
