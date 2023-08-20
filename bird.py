@@ -28,7 +28,10 @@ def init(_x=0, _y=0):
     global cntFrms
     global x
     global y
+    global mov
+    global mov_y
     global sound
+    global dead
 
     for i in range(3):
         images[i] = r.load_texture("assets/passarolho" + str(i) + ".png")
@@ -37,10 +40,13 @@ def init(_x=0, _y=0):
         explode_images[i] = r.load_texture("assets/passarolho_explode" + str(i) + ".png")
 
     sound = r.load_sound("assets/bird_die.wav")
+    dead = False
 
     cntFrames = 0
     x = _x
     y = _y
+    mov = 0.0
+    mov_y = 0.0
     initialized = True
 
 

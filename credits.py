@@ -1,5 +1,6 @@
 # credits
 import pyray as r
+import utils as u
 import bird
 
 
@@ -66,9 +67,7 @@ def update(fnt):
 
     # Render
     r.draw_texture_ex(bg, (0, 0), 0.0, 3, r.WHITE)
-
-    r.draw_text_ex(fnt, "Creditos", (135, 50), 30, 0, r.DARKGRAY)
-    r.draw_text_ex(fnt, "Creditos", (133, 48), 30, 0, r.RED)
+    u.draw_text_with_shadow(fnt, "Creditos", (133, 48), 30, 2, r.RED)
     bird.update()
 
     if status == 0:
@@ -77,12 +76,12 @@ def update(fnt):
             pos = poss[j]
 
             for i in range(len(linha)):
-                r.draw_text_ex(
+                u.draw_text_with_shadow(
                     fnt,
                     linha[i],
                     (pos[i]["x"], pos[i]["y"]),
-                    0,
                     font_size,
+                    1,
                     r.GREEN
                 )
 
@@ -101,12 +100,12 @@ def update(fnt):
 
             for i in range(len(linha)):
                 if cnt > int(delay / 15):
-                    r.draw_text_ex(
+                    u.draw_text_with_shadow(
                         fnt,
                         linha[i],
                         (int(pos[i]["x"]), int(pos[i]["y"])),
                         font_size,
-                        0,
+                        1,
                         r.GREEN
                     )
                     continue
@@ -114,12 +113,12 @@ def update(fnt):
                 pos[i]["x"] += (
                     (90 + i * (font_size - 6)) - pos[i]["x"]) / step_factor
                 pos[i]["y"] += (yLine[j] - pos[i]["y"]) / step_factor
-                r.draw_text_ex(
+                u.draw_text_with_shadow(
                     fnt,
                     linha[i],
                     (int(pos[i]["x"]), int(pos[i]["y"])),
                     font_size,
-                    0,
+                    1,
                     r.GREEN
                 )
                 cnt += 1

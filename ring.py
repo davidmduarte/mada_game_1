@@ -44,4 +44,4 @@ def end():
     for i in range(5):
         r.unload_texture(images[i])
 
-    unload_sound(sound)
+    r.unload_sound(sound)

@@ -1,8 +1,8 @@
 # menu
 # falta um titulo giro
-# falta um backgroud giro
 # falta uma font que suporte utf8 gira e monospace
 import pyray as r
+import utils as u
 import bird
 
 initialized = False
@@ -45,8 +45,7 @@ def update(fnt):
     # Render
     r.draw_texture_ex(bg, (0, 0), 0.0, 3, r.WHITE)
 
-    r.draw_text_ex(fnt, "Jogo da Madalena", (35, 50), 40, 0, r.DARKGRAY)
-    r.draw_text_ex(fnt, "Jogo da Madalena", (33, 48), 40, 0, r.BLUE)
+    u.draw_text_with_shadow(fnt, "Jogo da Madalena", (33, 48), 40, 2, r.BLUE)
 
     bird.update()
 

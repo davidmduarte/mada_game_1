@@ -125,9 +125,9 @@ def update(enemy_name, pos, bg_pos, bird_pos, bird_size):
             if not collision:
                 if (
                     bird_pos[0] + (bird_size[0] - 5) > e_x and
-                    bird_pos[0] < (e_x + (40 * 3)) and
+                    bird_pos[0] < (e_x + (35 * 3)) and
                     bird_pos[1] + (bird_size[1] - 5) > e_y and
-                    bird_pos[1] < (e_y + (40 * 3))
+                    bird_pos[1] < (e_y + (35 * 3))
                    ):
                     collision = True
 
