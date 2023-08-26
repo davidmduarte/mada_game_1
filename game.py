@@ -48,7 +48,7 @@ def update(fnt):
 
     u.draw_text_with_shadow(fnt, "SCORE: " + str(points), (5, 5), 25, 2, r.RED)
 
-    # Á espera de uma tecvla para iniciar o jogo
+    # Á espera de uma tecla para iniciar o jogo
     if status == 0:
         if r.is_key_pressed(r.KEY_ENTER):
             bird.setAnimation(True)
@@ -81,7 +81,16 @@ def update(fnt):
         elif r.is_key_up(r.KEY_UP):
             bird.up = False
 
-        levels.y += 1
+        if levels.y < 0:
+            levels.y += 1
+        else:
+            if levels.y == 0:
+                print("game 1")
+                bird.dance()
+                levels.y = 1
+            if bird.is_dancing == False:
+                print("game 2")
+                return end()
 
     # Jogo em pausa
     # calculo que este estado ainda tenha muitos bugs
