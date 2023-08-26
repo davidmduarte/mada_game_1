@@ -88,7 +88,7 @@ def update(fnt):
                 print("game 1")
                 bird.dance()
                 levels.y = 1
-            if bird.is_dancing == False:
+            if not bird.is_dancing:
                 print("game 2")
                 return end()
 

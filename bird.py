@@ -24,10 +24,11 @@ sound = None
 is_dancing = False
 music = None
 
+
 def init(_x=0, _y=0):
     global initialized
     global images
-    global cntFrms
+    global cntFrames
     global x
     global y
     global mov
@@ -41,10 +42,12 @@ def init(_x=0, _y=0):
         images[i] = r.load_texture("assets/passarolho" + str(i) + ".png")
 
     for i in range(6):
-        explode_images[i] = r.load_texture("assets/passarolho_explode" + str(i) + ".png")
+        explode_images[i] = r.load_texture(
+            "assets/passarolho_explode" + str(i) + ".png")
 
     for i in range(4):
-        dance_images[i] = r.load_texture("assets/passarolho_dance" + str(i) + ".png")
+        dance_images[i] = r.load_texture(
+            "assets/passarolho_dance" + str(i) + ".png")
 
     sound = r.load_sound("assets/bird_die.wav")
     dead = False
@@ -79,6 +82,8 @@ def setAnimation(flag=True):
 
 
 def setFrame(n=0):
+    global cntFrames
+
     cntFrames = n * delay
 
 
@@ -100,6 +105,7 @@ def dance():
         is_dancing = True
         cntFrames = 0
         play_win_music()
+
 
 def update():
     global cntFrames
@@ -123,7 +129,8 @@ def update():
             )
     elif is_dancing:
         r.draw_texture_ex(
-            dance_images[int(cntFrames / (delay * 2)) % 4], (int(x), int(y)), 0.0, 3, r.WHITE
+            dance_images[int(cntFrames / (delay * 2)) %
+                         4], (int(x), int(y)), 0.0, 3, r.WHITE
         )
         if not r.is_sound_playing(music):
             is_dancing = False
