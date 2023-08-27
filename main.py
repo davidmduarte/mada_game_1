@@ -5,6 +5,7 @@ import menu
 import credits
 import game
 
+__version__ = "0.1.2"
 status = 0
 
 r.init_window(g.SCREEN_WIDTH, g.SCREEN_HEIGHT, "Madalena Jogo 1")
